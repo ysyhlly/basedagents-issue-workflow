@@ -86,6 +86,10 @@ jobs:
               // JSON escapes embedded newlines so issue text cannot inject log commands.
               core.info('DRY RUN: no BasedAgents request, comments, or label changes.');
               core.info(JSON.stringify(task));
+              // Export the task JSON to a file for automation verification
+              const dryRunFile = path.join(process.cwd(), 'task.json');
+              fs.writeFileSync(dryRunFile, JSON.stringify(task), { mode: 0o600 });
+              core.info('Dry run task JSON written to ' + dryRunFile);
               return;
             }
 
